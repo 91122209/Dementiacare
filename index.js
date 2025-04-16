@@ -7,7 +7,7 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public")); // 提供 index.html 靜態頁面
+app.use(express.static); // 提供 index.html 靜態頁面
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
