@@ -29,8 +29,8 @@ app.post("/api/chat", async (req, res) => {
       model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: "你是一位親切且專業的失智症照護助手。" },
-        { role: "user", content: question },
-      ],
+        { role: "user", content: question }
+      ]
     });
 
     const reply = completion.choices[0].message.content;
@@ -40,6 +40,7 @@ app.post("/api/chat", async (req, res) => {
     res.status(500).json({ error: "伺服器錯誤" });
   }
 });
+
 
 // ✅ 頁面路由
 app.get("/", (req, res) => {
