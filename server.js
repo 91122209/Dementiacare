@@ -17,15 +17,24 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        model: "deepseek-chat", // ✅ 使用 DeepSeek 模型
-        messages: [
-          { role: "system", content: "你是一位親切且專業的失智症照護助手。" },
-          { role: "user", content: question }
-        ]
-      },
+const response = await axios.post(
+  "https://openrouter.ai/api/v1/chat/completions",
+  {
+    model: "deepseek-ai/deepseek-chat", // ✅ 正確 model ID
+    messages: [
+      { role: "system", content: "你是一位親切且專業的失智症照護助手。" },
+      { role: "user", content: question }
+    ]
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": "https://dementia-r1e8.onrender.com",
+      "X-Title": "DementiaCareGPT"
+    }
+  }
+);
       {
         headers: {
           "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
