@@ -154,26 +154,26 @@
   </div>
 
   <!-- JavaScript 呼叫後端 -->
-  <script>
-    async function askGPT() {
-      const question = document.getElementById('question').value.trim();
-      const responseBox = document.getElementById('response');
+  <!-- JavaScript 呼叫後端 -->
+<script>
+  async function askGPT() {
+    const question = document.getElementById('question').value.trim();
+    const responseBox = document.getElementById('response');
 
-      if (!question) {
-        alert("請先輸入問題！");
-        return;
-      }
+    if (!question) {
+      alert("請先輸入問題！");
+      return;
+    }
 
-      responseBox.innerText = "AI 正在思考中……";
+    responseBox.innerText = "AI 正在思考中……";
 
+    try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          question: question
-        })
+        body: JSON.stringify({ question })
       });
 
       const data = await response.json();
@@ -182,13 +182,28 @@
       } else {
         responseBox.innerText = "AI 無法提供回覆，請稍後再試。";
       }
+    } catch (err) {
+      responseBox.innerText = "發生錯誤，請稍後再試。";
     }
+  }
 
-    function resetFields() {
-      document.getElementById('question').value = '';
-      document.getElementById('response').innerText = 'AI 將解答您的問題。';
-    }
-  </script>
+  function resetFields() {
+    document.getElementById('question').value = '';
+    document.getElementById('response').innerText = 'AI 將解答您的問題。';
+  }
+
+  // ✅ 監聽 Enter 鍵事件（加在 textarea 上）
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("question");
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault(); // 避免換行
+        askGPT();
+      }
+    });
+  });
+</script>
+
 
 </body>
 </html>
