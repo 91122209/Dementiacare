@@ -43,7 +43,7 @@ app.post("/api/chat", async (req, res) => {
 
 
 // ✅ 頁面路由
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html")); // 首頁
 });
 
