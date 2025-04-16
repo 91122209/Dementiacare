@@ -7,7 +7,7 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // 靜態頁面支援（HTML）
+app.use(express.static(__dirname));
 
 // API 路由
 app.post("/api/chat", async (req, res) => {
@@ -30,7 +30,7 @@ app.post("/api/chat", async (req, res) => {
         headers: {
           Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "https://dementia-r1e8.onrender.com", // 換成你 Render 的網址
+          "HTTP-Referer": "https://dementia-r1e8.onrender.com", // <- 你的 Render 網址
           "X-Title": "DementiaCareGPT"
         }
       }
@@ -39,17 +39,16 @@ app.post("/api/chat", async (req, res) => {
     const reply = response.data.choices[0].message.content;
     res.json({ reply });
   } catch (error) {
-    console.error("OpenRouter 錯誤：", error.message);
+    console.error("OpenRouter 錯誤：", error.response?.data || error.message);
     res.status(500).json({ error: "伺服器錯誤" });
   }
 });
 
-// 前端支援頁面重新整理 fallback
+// fallback
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// 伺服器啟動
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ 伺服器已啟動：http://localhost:${PORT}`);
