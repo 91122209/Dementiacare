@@ -7,8 +7,9 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(__dirname)); // 靜態頁面支援（HTML）
 
+// Gemini Pro API 路由
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
@@ -17,36 +18,36 @@ app.post("/api/chat", async (req, res) => {
 
   try {
     const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
-        model: "google/gemini-pro",  // ✅ 這裡改成正確 ID
-        messages: [
-          { role: "system", content: "你是一位親切且專業的失智症照護助手。" },
-          { role: "user", content: question }
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: "你是一位親切且專業的失智症照護助手，請回答：" + question }]
+          }
         ]
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "https://dementia-r1e8.onrender.com",
-          "X-Title": "DementiaCareGPT"
+          "Content-Type": "application/json"
         }
       }
     );
 
-    const reply = response.data.choices[0].message.content;
+    const reply = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "AI 無法產生回應。";
     res.json({ reply });
   } catch (error) {
-    console.error("OpenRouter 錯誤：", error.response?.data || error.message);
+    console.error("Gemini 錯誤：", error.message);
     res.status(500).json({ error: "伺服器錯誤" });
   }
 });
 
+// 支援頁面重新整理
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// 伺服器啟動
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ 伺服器已啟動：http://localhost:${PORT}`);
