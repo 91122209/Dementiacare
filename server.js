@@ -17,25 +17,25 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const response = await axios.post(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
+const response = await axios.post(
+  "https://generativelanguage.googleapis.com/v1/models/gemini-pro-1.0:generateContent",
+  {
+    contents: [
       {
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: question }]
-          }
-        ]
-      },
-      {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        params: {
-          key: process.env.GEMINI_API_KEY
-        }
+        role: "user",
+        parts: [{ text: question }]
       }
-    );
+    ]
+  },
+  {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    params: {
+      key: process.env.GEMINI_API_KEY
+    }
+  }
+);
 
     const reply = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
     if (reply) {
