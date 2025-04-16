@@ -1,15 +1,15 @@
 {
-    "name": "gpt-ai-api",
-    "version": "1.0.0",
-    "description": "AI 問答伺服器",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js"
-    },
-    "dependencies": {
-      "cors": "^2.8.5",
-      "dotenv": "^16.3.1",
-      "express": "^4.18.2",
-      "openai": "^4.26.0"
-    }
+  "name": "dementia-ai",
+  "version": "1.0.0",
+  "description": "失智症 AI 諮詢系統",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "openai": "^4.26.0"
   }
+}
