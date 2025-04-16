@@ -167,15 +167,15 @@
 
     responseBox.innerText = "AI 正在思考中……";
 
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ question: question })
-      });
-
+const response = await fetch("/api/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    question: question
+  })
+});
       const data = await response.json();
       if (data && data.reply) {
         responseBox.innerText = data.reply;
