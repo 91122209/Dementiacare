@@ -3,6 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>聯絡我們</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("P0_ADg-Nv1Llu71Fd"); // 你的 EmailJS 公鑰
+    })();
+
+    function sendEmail(e) {
+      e.preventDefault();
+
+      emailjs.sendForm('service_1', 'template_smfq3n6', e.target)
+        .then(() => {
+          alert("已成功送出，感謝您的填寫！");
+          e.target.reset();
+        }, (error) => {
+          alert("發送失敗，請稍後再試。");
+          console.log(error);
+        });
+    }
+  </script>
   <style>
     body {
       background-color: #e5f4e3;
@@ -48,7 +67,6 @@
       font-size: 30px;
       border-left: 6px solid #C4571B;
       padding-left: 10px;
-      margin-bottom: 30px;
       margin: 20px 0 30px 0;
     }
 
@@ -115,12 +133,10 @@
     .center {
       text-align: center;
     }
-
   </style>
 </head>
 <body>
 
-  <!-- LOGO + 導覽列 -->
   <div class="header">
     <a href="index.html"><img src="one.jpg" alt="高雄市立聯合醫院" class="logo"></a>
     <div class="nav">
@@ -138,7 +154,7 @@
 
   <h2>聯絡我們</h2>
 
-  <form action="sendmail.php" method="POST">
+  <form onsubmit="sendEmail(event)">
     <table>
       <tr>
         <th>填表人*</th>
@@ -178,14 +194,14 @@
           <label><input type="checkbox" name="type[]" value="混合型">混合型</label>
           <label><input type="checkbox" name="type[]" value="不詳">不詳</label>
           <label><input type="checkbox" name="type[]" value="其他">其他</label>
-          <input type="text" name="type_other">
+          <input type="text" name="others">
         </td>
       </tr>
 
       <tr>
         <th>患者基本資料</th>
         <td>
-          年齡：<input type="text" name="birth"><br>
+          年齡：<input type="text" name="yearsold"><br>
           確定就診：
           <input type="radio" name="diagnosed" value="是"> 是
           <input type="radio" name="diagnosed" value="否"> 否<br>
