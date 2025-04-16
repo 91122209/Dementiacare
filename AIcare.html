@@ -167,20 +167,21 @@
     responseBox.innerText = "AI 正在思考中……";
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ question })
-      });
+const response = await fetch("/api/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ question })
+});
 
-      const data = await response.json();
-      if (data && data.reply) {
-        responseBox.innerText = data.reply;
-      } else {
-        responseBox.innerText = "AI 無法提供回覆，請稍後再試。";
-      }
+const data = await response.json();
+if (data && data.reply) {
+  responseBox.innerText = data.reply;
+} else {
+  responseBox.innerText = "AI 無法提供回覆，請稍後再試。";
+}
+
     } catch (err) {
       console.error("前端錯誤：", err);
       responseBox.innerText = "發生錯誤，請稍後再試。";
