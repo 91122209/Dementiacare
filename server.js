@@ -4,7 +4,6 @@ const path = require("path");
 const axios = require("axios");
 require("dotenv").config();
 
-console.log("API 金鑰是否存在？", process.env.GEMINI_API_KEY ?)
 
 const app = express();
 app.use(cors());
