@@ -50,6 +50,18 @@ app.get("/AIcare.html", (req, res) => {
   res.sendFile(path.join(__dirname, "AIcare.html")); // AI問答頁
 });
 
+app.get("/dementiacare.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "dementiacare.html")); // 聯絡我們
+});
+
+app.get("/downloadcare.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "downloadcare.html")); // 聯絡我們
+});
+
+app.get("/familycare.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "familycare.html")); // 聯絡我們
+});
+
 app.get("/email.html", (req, res) => {
   res.sendFile(path.join(__dirname, "email.html")); // 聯絡我們
 });
