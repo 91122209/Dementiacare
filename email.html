@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>聯絡我們</title>
+  <style>
+    body {
+      background-color: #e5f4e3;
+      font-family: "微軟正黑體", sans-serif;
+      padding: 30px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      max-width: 500px;
+      height: auto;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .nav a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .nav span.separator {
+      margin: 0 10px;
+      color: #666;
+    }
+
+    h2 {
+      color: #C4571B;
+      font-size: 30px;
+      border-left: 6px solid #C4571B;
+      padding-left: 10px;
+      margin-bottom: 30px;
+      margin: 20px 0 30px 0;
+    }
+
+    form {
+      background: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    th {
+      width: 160px;
+      background: #ffe6cc;
+      text-align: right;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: calc(100% - 20px);
+      padding: 5px;
+      margin: 5px 0;
+      font-size: 15px;
+    }
+
+    select.short {
+      width: 150px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .submit-button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background-color: #1f78b4;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background-color: #155d8b;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- LOGO + 導覽列 -->
+  <div class="header">
+    <a href="index.html"><img src="one.jpg" alt="高雄市立聯合醫院" class="logo"></a>
+    <div class="nav">
+      <a href="dementiacare.html">關於失智症<br>相關照護及認識</a>
+      <span class="separator">|</span>
+      <a href="AIcare.html">關於失智症問題<br>由AI來協助您</a>
+      <span class="separator">|</span>
+      <a href="familycare.html">家屬支持團體<br>哪裡找</a>
+      <span class="separator">|</span>
+      <a href="downloadcare.html">失智據點&醫事C據點<br>哪裡找</a>
+      <span class="separator">|</span>
+      <a href="email.html">聯絡我們</a>
+    </div>
+  </div>
+
+  <h2>聯絡我們</h2>
+
+  <form action="sendmail.php" method="POST">
+    <table>
+      <tr>
+        <th>填表人*</th>
+        <td>
+          姓名：<input type="text" name="name" required><br>
+          與失智患者關係：
+          <select name="relation" class="short">
+            <option>請選擇</option>
+            <option>配偶</option>
+            <option>子女</option>
+            <option>其他親屬</option>
+            <option>非親屬</option>
+          </select><br>
+          居住地：<input type="text" name="location">
+        </td>
+      </tr>
+
+      <tr>
+        <th>期望聯繫方式*</th>
+        <td>
+          <label><input type="checkbox" name="contact[]" value="Email"> Email</label><br>
+          <input type="email" name="email"><br>
+          <label><input type="checkbox" name="contact[]" value="電話"> 電話</label>
+          上午(9-11) <input type="radio" name="time" value="上午">
+          中午(12-13) <input type="radio" name="time" value="中午">
+          下午(13-17) <input type="radio" name="time" value="下午"><br>
+        </td>
+      </tr>
+
+      <tr>
+        <th>失智症種類</th>
+        <td>
+          <label><input type="checkbox" name="type[]" value="阿茲海默">阿茲海默</label>
+          <label><input type="checkbox" name="type[]" value="血管型">血管型</label>
+          <label><input type="checkbox" name="type[]" value="額顳葉型">額顳葉型</label>
+          <label><input type="checkbox" name="type[]" value="路易氏體型">路易氏體型</label>
+          <label><input type="checkbox" name="type[]" value="混合型">混合型</label>
+          <label><input type="checkbox" name="type[]" value="不詳">不詳</label>
+          <label><input type="checkbox" name="type[]" value="其他">其他</label>
+          <input type="text" name="type_other">
+        </td>
+      </tr>
+
+      <tr>
+        <th>患者基本資料</th>
+        <td>
+          年齡：<input type="text" name="birth"><br>
+          確定就診：
+          <input type="radio" name="diagnosed" value="是"> 是
+          <input type="radio" name="diagnosed" value="否"> 否<br>
+          失智等級：
+          <input type="radio" name="level" value="輕"> 輕
+          <input type="radio" name="level" value="中"> 中
+          <input type="radio" name="level" value="重度"> 重度<br>
+          身心障礙手冊：
+          <input type="radio" name="disabled_card" value="是"> 是
+          <input type="radio" name="disabled_card" value="否"> 否<br>
+          重大傷病卡：
+          <input type="radio" name="critical_card" value="是"> 是
+          <input type="radio" name="critical_card" value="否"> 否
+        </td>
+      </tr>
+
+      <tr>
+        <th>問題主述*</th>
+        <td>
+          <textarea name="message" required placeholder="請在此輸入您的問題，謝謝！"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2" class="center">
+          <button type="submit" class="submit-button">送出</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+</body>
+</html>
