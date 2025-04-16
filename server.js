@@ -7,14 +7,11 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // 靜態頁面支援（HTML）
+app.use(express.static(__dirname));
 
-// Gemini Pro API 路由
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
-  if (!question) {
-    return res.status(400).json({ error: "請提供問題" });
-  }
+  if (!question) return res.status(400).json({ error: "請提供問題" });
 
   try {
     const response = await axios.post(
@@ -22,8 +19,8 @@ app.post("/api/chat", async (req, res) => {
       {
         contents: [
           {
-            role: "user",
-            parts: [{ text: "你是一位親切且專業的失智症照護助手，請回答：" + question }]
+            parts: [{ text: question }],
+            role: "user"
           }
         ]
       },
@@ -34,7 +31,7 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-    const reply = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "AI 無法產生回應。";
+    const reply = response.data.candidates[0]?.content?.parts[0]?.text || "AI 沒有給出回答";
     res.json({ reply });
   } catch (error) {
     console.error("Gemini 錯誤：", error.message);
@@ -42,12 +39,10 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// 支援頁面重新整理
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// 伺服器啟動
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ 伺服器已啟動：http://localhost:${PORT}`);
