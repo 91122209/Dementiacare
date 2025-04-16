@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// 使用 Gemini Pro API 回答問題
+// Gemini API 路由
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
@@ -17,25 +17,25 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-const response = await axios.post(
-  "https://generativelanguage.googleapis.com/v1/models/gemini-pro-1.0:generateContent",
-  {
-    contents: [
+    const response = await axios.post(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent", // ← 改成 v1beta
       {
-        role: "user",
-        parts: [{ text: question }]
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: question }]
+          }
+        ]
+      },
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        params: {
+          key: process.env.GEMINI_API_KEY
+        }
       }
-    ]
-  },
-  {
-    headers: {
-      "Content-Type": "application/json"
-    },
-    params: {
-      key: process.env.GEMINI_API_KEY
-    }
-  }
-);
+    );
 
     const reply = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
     if (reply) {
@@ -49,7 +49,7 @@ const response = await axios.post(
   }
 });
 
-// fallback for SPA
+// 支援 HTML 路由
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
