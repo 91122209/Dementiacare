@@ -9,7 +9,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// API 路由
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
@@ -20,7 +19,7 @@ app.post("/api/chat", async (req, res) => {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "deepseek-ai/deepseek-chat",
+        model: "deepseek-chat",  // ✅ 這裡改成正確 ID
         messages: [
           { role: "system", content: "你是一位親切且專業的失智症照護助手。" },
           { role: "user", content: question }
@@ -30,7 +29,7 @@ app.post("/api/chat", async (req, res) => {
         headers: {
           Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "https://dementia-r1e8.onrender.com", // <- 你的 Render 網址
+          "HTTP-Referer": "https://dementia-r1e8.onrender.com",
           "X-Title": "DementiaCareGPT"
         }
       }
@@ -44,7 +43,6 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// fallback
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
