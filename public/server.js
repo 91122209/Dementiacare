@@ -1,21 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const { OpenAI } = require("openai");
-require("dotenv").config();
-
 const path = require("path");
+
 const app = express();
+
+// 不需要 dotenv，因為 Render 已經自動讀取環境變數
+// require("dotenv").config(); ← 這一行可以刪除
+
+// 讀取環境變數
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname))); // 靜態檔案提供
 
-// 1️⃣ 提供所有靜態檔案（HTML、CSS、JS、圖片）
-app.use(express.static(path.join(__dirname)));
-
-// 2️⃣ 初始化 OpenAI
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-// 3️⃣ ChatGPT 接收 POST 請求
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
@@ -39,12 +38,11 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// 4️⃣ 預設回傳首頁 index.html（處理刷新頁面或 404）
+// 設定 fallback 頁面（支援路由刷新）
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// 5️⃣ 啟動伺服器
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`伺服器已啟動在 http://localhost:${PORT}`);
