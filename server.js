@@ -26,12 +26,13 @@ app.post("/api/chat", async (req, res) => {
         ]
       },
       {
-        headers: {
-          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "https://dementia-r1e8.onrender.com", // 換成你實際網址
-          "X-Title": "DementiaCareGPT"
-        }
+headers: {
+  "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+  "Content-Type": "application/json",
+  "HTTP-Referer": "https://dementia-r1e8.onrender.com",  // 必須與你的 Render 網址一致
+  "X-Title": "DementiaCareGPT"
+}
+
       }
     );
 
