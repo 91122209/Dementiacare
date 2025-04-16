@@ -2,9 +2,9 @@
   "name": "dementia-ai",
   "version": "1.0.0",
   "description": "失智症 AI 諮詢系統",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
