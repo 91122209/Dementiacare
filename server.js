@@ -9,7 +9,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static); // 提供 index.html 靜態頁面
 
+const { OpenAI } = require("openai");
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
 
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
