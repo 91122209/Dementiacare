@@ -19,7 +19,7 @@ app.post("/api/chat", async (req, res) => {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "deepseek-chat",  // ✅ 這裡改成正確 ID
+        model: "google/gemini-pro",  // ✅ 這裡改成正確 ID
         messages: [
           { role: "system", content: "你是一位親切且專業的失智症照護助手。" },
           { role: "user", content: question }
