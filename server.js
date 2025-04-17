@@ -30,7 +30,9 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-    const reply = response.data?.generated_text || response.data?.[0]?.generated_text;
+const reply = response.data.generated_text || 
+              response.data[0]?.generated_text || 
+              response.data?.choices?.[0]?.message?.content;
     if (reply) {
       res.json({ reply });
     } else {
