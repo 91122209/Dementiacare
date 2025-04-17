@@ -15,30 +15,25 @@ app.post("/api/chat", async (req, res) => {
     return res.status(400).json({ error: "請提供問題" });
   }
 
-  const prompt = `### Human:\n${question}\n### Assistant:`;
-
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-7B-Chat",
-      { inputs: prompt },
+      "https://api-inference.huggingface.co/models/SCIR-HI/Mini-Med-Chat",
+      {
+        inputs: question
+      },
       {
         headers: {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
           "Content-Type": "application/json"
-        }
+        },
+        timeout: 60000 // 避免逾時
       }
     );
 
-    const full = response.data?.[0]?.generated_text;
-    const reply = full?.replace(prompt, "").trim();
-
-    if (reply) {
-      res.json({ reply });
-    } else {
-      res.status(500).json({ error: "AI 無法提供回答" });
-    }
+    const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
+    res.json({ reply });
   } catch (error) {
-    console.error("Qwen 錯誤：", error.response?.data || error.message);
+    console.error("Hugging Face 錯誤：", error.response?.data || error.message);
     res.status(500).json({ error: "伺服器錯誤，請稍後再試。" });
   }
 });
