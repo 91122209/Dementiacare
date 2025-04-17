@@ -5,9 +5,11 @@ const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
+
+// ✅ 加入 CORS 設定
 app.use(cors({
-  origin: "https://dementia-r1e8.onrender.com", // 👈 允許你的前端頁面
-  methods: ["POST", "GET"],
+  origin: "*",
+  methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
@@ -31,7 +33,7 @@ app.post("/api/chat", async (req, res) => {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
           "Content-Type": "application/json"
         },
-        timeout: 60000 // 避免逾時
+        timeout: 60000
       }
     );
 
@@ -43,6 +45,7 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+// 提供靜態頁面
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
