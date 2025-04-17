@@ -4,13 +4,11 @@ const path = require("path");
 const axios = require("axios");
 require("dotenv").config();
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Gemini API 路由
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
@@ -19,38 +17,26 @@ app.post("/api/chat", async (req, res) => {
 
   try {
     const response = await axios.post(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent", // ← 改成 v1beta
+      "https://api-inference.huggingface.co/models/IDEA-CCNL/Ziya-LLaMA-7B-Chat",
       {
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: question }]
-          }
-        ]
+        inputs: question,
+        parameters: { max_new_tokens: 200 }
       },
       {
         headers: {
-          "Content-Type": "application/json"
-        },
-        params: {
-          key: process.env.GEMINI_API_KEY
+          Authorization: Bearer ${process.env.HUGGINGFACE_API_KEY}
         }
       }
     );
 
-    const reply = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (reply) {
-      res.json({ reply });
-    } else {
-      res.status(500).json({ error: "AI 無回覆" });
-    }
+    const reply = response.data?.[0]?.generated_text || "AI 無法回應，請稍後再試。";
+    res.json({ reply });
   } catch (error) {
-    console.error("Gemini 錯誤：", error.response?.data || error.message);
+    console.error("Hugging Face 錯誤：", error.message);
     res.status(500).json({ error: "伺服器錯誤" });
   }
 });
 
-// 支援 HTML 路由
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
