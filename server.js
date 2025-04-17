@@ -1,7 +1,7 @@
 const express = require("express");
+const axios = require("axios");
 const cors = require("cors");
 const path = require("path");
-const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
@@ -11,28 +11,24 @@ app.use(express.static(__dirname));
 
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
-  if (!question) {
-    return res.status(400).json({ error: "請提供問題" });
-  }
 
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/IDEA-CCNL/Ziya-LLaMA-7B-Chat",
+      "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-0.5B-Chat",
       {
-        inputs: question,
-        parameters: { max_new_tokens: 200 }
+        inputs: question
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`
+          Authorization: Bearer ${process.env.HUGGINGFACE_API_KEY}
         }
       }
     );
 
-    const reply = response.data?.[0]?.generated_text || "AI 無法回應，請稍後再試。";
+    const reply = response.data?.[0]?.generated_text || "AI 無回覆";
     res.json({ reply });
   } catch (error) {
-    console.error("Hugging Face 錯誤：", error.message);
+    console.error("Hugging Face 錯誤：", error.response?.data || error.message);
     res.status(500).json({ error: "伺服器錯誤" });
   }
 });
