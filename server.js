@@ -7,21 +7,22 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // 提供 HTML 與圖片等靜態檔案
+app.use(express.static(__dirname));
 
-// POST 路由：處理問題並傳送至 Hugging Face 模型
+// 呼叫 Hugging Face API
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
     return res.status(400).json({ error: "請提供問題" });
   }
 
+  // 加入 prompt 格式（對話模式）
+  const prompt = `### Human:\n${question}\n### Assistant:`;
+
   try {
     const response = await axios.post(
       "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-0.5B-Chat",
-      {
-        inputs: question
-      },
+      { inputs: prompt },
       {
         headers: {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
@@ -30,21 +31,21 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-const reply = response.data.generated_text || 
-              response.data[0]?.generated_text || 
-              response.data?.choices?.[0]?.message?.content;
+    const fullText = response.data?.[0]?.generated_text;
+    const reply = fullText?.replace(prompt, "").trim();
+
     if (reply) {
       res.json({ reply });
     } else {
-      res.status(500).json({ error: "AI 沒有回覆內容" });
+      res.status(500).json({ error: "AI 無法提供回答" });
     }
   } catch (error) {
     console.error("Hugging Face 錯誤：", error.response?.data || error.message);
-    res.status(500).json({ error: "伺服器錯誤" });
+    res.status(500).json({ error: "伺服器錯誤，請稍後再試。" });
   }
 });
 
-// 支援前端 HTML 重新整理
+// 重新導向首頁（避免刷新找不到路徑）
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
