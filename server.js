@@ -20,9 +20,7 @@ app.post("/api/chat", async (req, res) => {
     const response = await axios.post(
       "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-0.5B-Chat",
       {
-        inputs: [
-          { role: "user", content: question }
-        ]
+        inputs: question
       },
       {
         headers: {
