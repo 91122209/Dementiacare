@@ -5,14 +5,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
-
-// ✅ 加入 CORS 設定
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
+app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
@@ -24,7 +17,7 @@ app.post("/api/chat", async (req, res) => {
 
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/SCIR-HI/MiniMed-Chat",
+      "https://api-inference.huggingface.co/models/wangrongwen/medical-qa-zh",
       {
         inputs: question
       },
@@ -37,7 +30,7 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-    const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
+    const reply = response.data?.generated_text || "AI 無法提供回答";
     res.json({ reply });
   } catch (error) {
     console.error("Hugging Face 錯誤：", error.response?.data || error.message);
@@ -45,7 +38,6 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// 提供靜態頁面
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
