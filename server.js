@@ -15,11 +15,11 @@ app.post("/api/chat", async (req, res) => {
     return res.status(400).json({ error: "請提供問題" });
   }
 
-  const prompt = `### Human:\n${question}\n### Assistant:`;
+  const prompt = `你是一位親切且專業的失智症照護助手。\n請回答使用者的問題：${question}`;
 
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-1.8B-Chat",
+      "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-0.5B-Chat",
       { inputs: prompt },
       {
         headers: {
@@ -29,9 +29,7 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-    const full = response.data?.[0]?.generated_text;
-    const reply = full?.replace(prompt, "").trim();
-
+    const reply = response.data?.[0]?.generated_text?.trim();
     if (reply) {
       res.json({ reply });
     } else {
@@ -44,7 +42,7 @@ app.post("/api/chat", async (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "AIcare.html")); // 或 index.html
 });
 
 const PORT = process.env.PORT || 3000;
