@@ -5,7 +5,12 @@ const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://dementia-r1e8.onrender.com", // 👈 允許你的前端頁面
+  methods: ["POST", "GET"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 app.use(express.static(__dirname));
 
