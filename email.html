@@ -115,7 +115,6 @@
     .center {
       text-align: center;
     }
-
   </style>
 </head>
 <body>
@@ -138,7 +137,7 @@
 
   <h2>聯絡我們</h2>
 
-  <form action="sendmail.php" method="POST">
+  <form id="contact-form">
     <table>
       <tr>
         <th>填表人*</th>
@@ -162,7 +161,7 @@
           <label><input type="checkbox" name="contact[]" value="Email"> Email</label><br>
           <input type="email" name="email"><br>
           <label><input type="checkbox" name="contact[]" value="電話"> 電話</label>
-          <input type="text" name="phone numbers"><br>
+          <input type="text" name="phone"><br>
         </td>
       </tr>
 
@@ -203,5 +202,24 @@
     </table>
   </form>
 
+  <!-- EmailJS Script -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("P0_ADg-Nv1LIu71Fd"); // 請改成你的 Public Key
+    })();
+
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm("service_1", "template_smfq3n6", this) // ← 改為你的 Template ID
+        .then(function() {
+          alert("訊息已成功寄出！");
+        }, function(error) {
+          alert("寄信失敗，請稍後再試");
+          console.error("錯誤：", error);
+        });
+    });
+  </script>
 </body>
 </html>
