@@ -17,7 +17,7 @@ app.post("/api/chat", async (req, res) => {
 
   try {
 const response = await axios.post(
-  "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
+  "https://api-inference.huggingface.co/models/OpenBuddy/openbuddy-llama2-13b",
   {
     inputs: `請用繁體中文回答以下問題：${question}`
   },
