@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
+// Gemini 問答路由
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
@@ -17,29 +18,40 @@ app.post("/api/chat", async (req, res) => {
 
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
-        inputs: `請用繁體中文回答以下問題：${question}。請不要使用英文。`
-  },
+        contents: [{
+          parts: [{
+            text: `請用繁體中文回答：「${question}」`
+          }],
+          role: "user"
+        }]
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
           "Content-Type": "application/json"
         },
         timeout: 60000
       }
     );
 
-    
-    const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
-    res.json({ reply });
+    // 取得原始回答內容
+    const fullReply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "AI 無法提供回答";
+
+    // 清理掉 prompt 指令與冗語
+    const cleanReply = fullReply
+      .replace(/請用繁體中文回答：「.*?」/g, '')
+      .replace(/回答如下[:：]?\s*/g, '')
+      .trim();
+
+    res.json({ reply: cleanReply });
   } catch (error) {
-    console.error("Hugging Face 錯誤：", error.response?.data || error.message);
+    console.error("Gemini API 錯誤：", error.response?.data || error.message);
     res.status(500).json({ error: "伺服器錯誤，請稍後再試。" });
   }
 });
 
+// 提供前端頁面
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
