@@ -17,8 +17,8 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-  const response = await axios.post(
-  "https://api-inference.huggingface.co/models/wangrongwen/medical-qa-zh",
+const response = await axios.post(
+  "https://api-inference.huggingface.co/models/IDEA-CCNL/Erlangshen-Medical-Chat",
   { inputs: question },
   {
     headers: {
