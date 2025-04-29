@@ -17,8 +17,8 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-   const response = await axios.post(
-  "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-Med-Chat",
+  const response = await axios.post(
+  "https://api-inference.huggingface.co/models/wangrongwen/medical-qa-zh",
   { inputs: question },
   {
     headers: {
@@ -26,10 +26,8 @@ app.post("/api/chat", async (req, res) => {
       "Content-Type": "application/json"
     },
     timeout: 60000
-
-      }
-    );
-
+  }
+);
     // Hugging Face 的回應格式
     const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
     res.json({ reply });
