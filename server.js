@@ -18,7 +18,9 @@ app.post("/api/chat", async (req, res) => {
   try {
 const response = await axios.post(
   "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
-  { inputs: question },
+  {
+    inputs: `請用繁體中文回答以下問題：${question}`
+  },
   {
     headers: {
       Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
@@ -27,7 +29,6 @@ const response = await axios.post(
     timeout: 60000
   }
 );
-
     const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
     res.json({ reply });
   } catch (error) {
