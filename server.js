@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
+// 接收前端問題並呼叫 Hugging Face 模型
 app.post("/api/chat", async (req, res) => {
   const question = req.body.question;
   if (!question) {
@@ -17,10 +18,8 @@ app.post("/api/chat", async (req, res) => {
 
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/wangrongwen/medical-qa-zh",
-      {
-        inputs: question
-      },
+      "https://api-inference.huggingface.co/models/Qwen/Qwen-Med-Chat",
+      { inputs: question },
       {
         headers: {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
@@ -30,7 +29,8 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-    const reply = response.data?.generated_text || "AI 無法提供回答";
+    // Hugging Face 的回應格式
+    const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
     res.json({ reply });
   } catch (error) {
     console.error("Hugging Face 錯誤：", error.response?.data || error.message);
@@ -38,6 +38,7 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+// 提供 index.html 給前端
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
