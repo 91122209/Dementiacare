@@ -16,19 +16,19 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const response = await axios.post(
-      "https://api-inference.huggingface.co/models/IDEA-CCNL/Ziya-LLaMA-7B-Chat",
-      {
-        inputs: question
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        timeout: 60000
-      }
-    );
+const response = await axios.post(
+  "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf",
+  {
+    inputs: question
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    timeout: 60000
+  }
+);
 
     const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
     res.json({ reply });
