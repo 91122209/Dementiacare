@@ -9,14 +9,35 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Gemini 問答路由
+// ===== 每日次數限制區塊 =====
+let dailyCount = 0;
+let lastResetDate = new Date().toDateString();
+const DAILY_LIMIT = 55;
+// ===========================
+
 app.post("/api/chat", async (req, res) => {
+  const today = new Date().toDateString();
+
+  // 每天自動重設
+  if (today !== lastResetDate) {
+    lastResetDate = today;
+    dailyCount = 0;
+  }
+
+  // 若超過每日上限，直接拒絕回答
+  if (dailyCount >= DAILY_LIMIT) {
+    return res.status(429).json({ reply: "⚠️ 今日回答次數已達上限，請明天再試。" });
+  }
+
   const question = req.body.question;
   if (!question) {
     return res.status(400).json({ error: "請提供問題" });
   }
 
   try {
+    // 累加次數
+    dailyCount++;
+
     const response = await axios.post(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
@@ -35,10 +56,7 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-    // 取得原始回答內容
     const fullReply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "AI 無法提供回答";
-
-    // 清理掉 prompt 指令與冗語
     const cleanReply = fullReply
       .replace(/請用繁體中文回答：「.*?」/g, '')
       .replace(/回答如下[:：]?\s*/g, '')
@@ -51,7 +69,6 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// 提供前端頁面
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
