@@ -137,7 +137,7 @@
 
   <h2>聯絡我們</h2>
 
-  <form id="contact-form">
+  <form id="contact-form" name="contact-form">
     <table>
       <tr>
         <th>填表人*</th>
@@ -207,13 +207,13 @@
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
     (function() {
-      emailjs.init("P0_ADg-Nv1LIu71Fd"); // 請改成你的 Public Key
+      emailjs.init("P0_ADg-Nv1Llu71Fd"); // ✅ 你的 Public Key
     })();
 
     document.getElementById("contact-form").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      emailjs.sendForm("service_1", "template_smfq3n6", this) // ← 改為你的 Template ID
+      emailjs.sendForm("service_1", "template_smfq3n6", this) // ✅ 換成你的 Template ID
         .then(function() {
           alert("訊息已成功寄出！");
         }, function(error) {
