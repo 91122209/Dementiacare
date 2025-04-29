@@ -16,19 +16,21 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-const response = await axios.post(
-  "https://api-inference.huggingface.co/models/wangrongwen/medical-qa-zh",
-  {
-    inputs: `請用繁體中文回答：${question}`
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    timeout: 90000  // 避免冷啟動失敗
-  }
-);
+    const response = await axios.post(
+      "https://api-inference.huggingface.co/models/baichuan-inc/Baichuan2-7B-Chat",
+      {
+        inputs: `請用繁體中文回答以下問題：${question}`
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        timeout: 60000
+      }
+    );
+
+    
     const reply = response.data?.[0]?.generated_text || "AI 無法提供回答";
     res.json({ reply });
   } catch (error) {
