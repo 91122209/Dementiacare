@@ -17,10 +17,8 @@ app.post("/api/chat", async (req, res) => {
 
   try {
 const response = await axios.post(
-  "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf",
-  {
-    inputs: question
-  },
+  "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
+  { inputs: question },
   {
     headers: {
       Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
