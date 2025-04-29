@@ -19,7 +19,8 @@ app.post("/api/chat", async (req, res) => {
     const response = await axios.post(
       "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
       {
-        inputs: `請用繁體中文回答以下問題：${question}`
+        inputs: `請用繁體中文回答以下問題：${question}。請不要使用英文。`
+  },
       },
       {
         headers: {
