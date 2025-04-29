@@ -17,15 +17,16 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const response = await axios.post(
-      "https://api-inference.huggingface.co/models/Qwen/Qwen-Med-Chat",
-      { inputs: question },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        timeout: 60000
+   const response = await axios.post(
+  "https://api-inference.huggingface.co/models/Qwen/Qwen1.5-Med-Chat",
+  { inputs: question },
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    timeout: 60000
+
       }
     );
 
