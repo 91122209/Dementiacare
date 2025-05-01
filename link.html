@@ -7,25 +7,27 @@
     body {
       background-color: #e5f4e3;
       font-family: "微軟正黑體", sans-serif;
-      margin: 0;
-      padding: 0;
+      padding: 20px;
     }
 
+    /* Logo + 導覽列容器 */
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px;
     }
 
     .logo {
-      max-width: 300px;
+      max-width: 350px;
       height: auto;
     }
 
     .nav {
       display: flex;
-      gap: 30px;
+      justify-content: flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-right: 20px;
       font-weight: bold;
       font-size: 16px;
     }
@@ -40,23 +42,16 @@
     }
 
     .nav span.separator {
+      margin: 0 10px;
       color: #666;
     }
 
-    .top-title-wrapper {
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 30px;
-    }
-
-    .top-title {
+    h2 {
       color: #C4571B;
-      font-size: 28px;
-      font-weight: bold;
+      font-size: 30px;
       border-left: 6px solid #C4571B;
       padding-left: 10px;
-      display: inline-block;
-      margin-top: 15px;
+      margin: 20px 0 30px 0;
     }
 
     .container {
