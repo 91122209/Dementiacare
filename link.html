@@ -2,30 +2,45 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>相關網頁連結 - 高雄市立聯合醫院</title>
+  <title>相關資源連結 - 高雄市立聯合醫院</title>
   <style>
     body {
-      background-color: #C7E2C0;
-      font-family: Arial, sans-serif;
+      background-color: #e5f4e3;
+      font-family: "微軟正黑體", sans-serif;
       margin: 0;
       padding: 0;
     }
 
-    nav {
-      background-color: #333;
-      padding: 10px;
-      text-align: center;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
     }
 
-    nav a {
-      color: white;
-      padding: 10px;
-      text-decoration: none;
+    .logo {
+      max-width: 300px;
+      height: auto;
+    }
+
+    .nav {
+      display: flex;
+      gap: 30px;
       font-weight: bold;
+      font-size: 16px;
     }
 
-    nav a:hover {
-      color: pink;
+    .nav a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .nav span.separator {
+      color: #666;
     }
 
     .container {
@@ -71,42 +86,28 @@
 </head>
 <body>
 
-  <!-- LOGO -->
-  <div style="text-align: center; margin-top: 20px; margin-bottom: 30px;">
-    <img src="one.jpg" alt="高雄市立聯合醫院" style="max-width: 600px; width: 100%;">
+  <!-- LOGO + 導覽列 -->
+  <div class="header">
+    <a href="index.html">
+      <img src="one.jpg" alt="高雄市立聯合醫院" class="logo">
+    </a>
+
+    <div class="nav">
+      <a href="dementiacare.html">關於失智症<br>相關照護及認識</a>
+      <span class="separator">|</span>
+      <a href="AIcare.html">關於失智症問題<br>由AI來協助您</a>
+      <span class="separator">|</span>
+      <a href="familycare.html">家屬支持團體<br>哪裡找</a>
+      <span class="separator">|</span>
+      <a href="downloadcare.html">失智據點&醫事C據點<br>哪裡找</a>
+      <span class="separator">|</span>
+      <a href="links.html">相關資源連結</a>
+      <span class="separator">|</span>
+      <a href="email.html">聯絡我們</a>
+    </div>
   </div>
 
-  <!-- 導覽列 -->
-  <nav style="background-color: #333; padding: 20px 0;">
-    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
-      <div style="text-align: center;">
-        <a href="dementiacare.html">關於失智症<br>相關照護及認識</a>
-      </div>
-      <div style="color: white;">｜</div>
-      <div style="text-align: center;">
-        <a href="AIcare.html">關於失智症問題<br>由AI來協助您</a>
-      </div>
-      <div style="color: white;">｜</div>
-      <div style="text-align: center;">
-        <a href="familycare.html">家屬支持團體<br>哪裡找</a>
-      </div>
-      <div style="color: white;">｜</div>
-      <div style="text-align: center;">
-        <a href="downloadcare.html">失智據點&醫事C<br>據點哪裡找</a>
-           </div>
-      <div style="color: white;">｜</div>
-      <div style="text-align: center;">
-        <a href="link.html">相關資源連結</a>
-      </div>
-      </div>
-      <div style="color: white;">｜</div>
-      <div style="text-align: center;">
-        <a href="email.html">聯絡我們</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- 相關連結內容 -->
+  <!-- 內容 -->
   <div class="container">
     <h1>🔗 相關網頁連結</h1>
 
