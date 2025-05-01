@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>相關資源連結 - 高雄市立聯合醫院</title>
+  <title>相關資源連結 - 高雄市立聯合醫院共照中心</title>
   <style>
     body {
       background-color: #e5f4e3;
@@ -10,7 +10,22 @@
       padding: 20px;
     }
 
-    /* Logo + 導覽列容器 */
+    .hospital-home-link {
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .hospital-home-link a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .hospital-home-link a:hover {
+      text-decoration: underline;
+    }
+
     .header {
       display: flex;
       align-items: center;
@@ -54,14 +69,14 @@
       margin: 20px 0 30px 0;
     }
 
-  .container {
-  max-width: 800px;
-  margin: 100px auto 40px auto; /* ↑ 上面多出 60px，置中顯示 */
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+    .container {
+      max-width: 800px;
+      margin: 100px auto 40px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
     .section-title {
       color: #C4571B;
@@ -100,6 +115,11 @@
 </head>
 <body>
 
+  <!-- 高雄市首頁連結 -->
+  <div class="hospital-home-link">
+    <a href="https://www.kmuh.gov.tw/" target="_blank">高雄市立聯合醫院 首頁</a>
+  </div>
+
   <!-- LOGO與導覽列 -->
   <div class="header">
     <a href="index.html">
@@ -124,7 +144,6 @@
   <!-- 頁面標題 -->
   <h2>相關資源連結</h2>
 
-
   <!-- 內容 -->
   <div class="container">
 
@@ -143,6 +162,7 @@
     <div class="link-item">
       <a href="https://socbu.kcg.gov.tw/index.php?prog=2&b_id=4&m_id=27&s_id=336" target="_blank">4. 怕走丟？愛心手鍊申請起來</a>
     </div>
+
   </div>
 
 </body>
