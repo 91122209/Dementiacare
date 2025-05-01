@@ -10,6 +10,23 @@
       padding: 30px;
     }
 
+    /* 高雄市首頁連結樣式 */
+    .hospital-home-link {
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .hospital-home-link a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .hospital-home-link a:hover {
+      text-decoration: underline;
+    }
+
     .header {
       display: flex;
       align-items: center;
@@ -48,7 +65,6 @@
       font-size: 30px;
       border-left: 6px solid #C4571B;
       padding-left: 10px;
-      margin-bottom: 30px;
       margin: 20px 0 30px 0;
     }
 
@@ -119,6 +135,11 @@
 </head>
 <body>
 
+  <!-- 高雄市首頁連結（右上角） -->
+  <div class="hospital-home-link">
+    <a href="https://www.kmuh.gov.tw/" target="_blank">高雄市立聯合醫院 首頁</a>
+  </div>
+
   <!-- LOGO + 導覽列 -->
   <div class="header">
     <a href="index.html"><img src="one.jpg" alt="高雄市立聯合醫院" class="logo"></a>
@@ -139,71 +160,71 @@
 
   <h2>聯絡我們</h2>
 
-<form id="contact-form">
-  <table>
-    <tr>
-      <th>填表人*</th>
-      <td>
-        姓名：<input type="text" name="user_name" required><br>
-        與失智患者關係：
-        <select name="relation" class="short">
-          <option>請選擇</option>
-          <option>本人</option>
-          <option>配偶</option>
-          <option>子女</option>
-          <option>其他親屬</option>
-          <option>非親屬</option>
-        </select><br>
-        居住地：<input type="text" name="location">
-      </td>
-    </tr>
+  <form id="contact-form">
+    <table>
+      <tr>
+        <th>填表人*</th>
+        <td>
+          姓名：<input type="text" name="user_name" required><br>
+          與失智患者關係：
+          <select name="relation" class="short">
+            <option>請選擇</option>
+            <option>本人</option>
+            <option>配偶</option>
+            <option>子女</option>
+            <option>其他親屬</option>
+            <option>非親屬</option>
+          </select><br>
+          居住地：<input type="text" name="location">
+        </td>
+      </tr>
 
-    <tr>
-      <th>期望聯繫方式*</th>
-      <td>
-        <label><input type="checkbox" name="contact_method" value="Email"> Email</label><br>
-        <input type="email" name="user_email"><br>
-        <label><input type="checkbox" name="contact_method" value="電話"> 電話</label>
-        <input type="text" name="phone">
-      </td>
-    </tr>
+      <tr>
+        <th>期望聯繫方式*</th>
+        <td>
+          <label><input type="checkbox" name="contact_method" value="Email"> Email</label><br>
+          <input type="email" name="user_email"><br>
+          <label><input type="checkbox" name="contact_method" value="電話"> 電話</label>
+          <input type="text" name="phone">
+        </td>
+      </tr>
 
-    <tr>
-      <th>失智症種類</th>
-      <td>
-        <label><input type="checkbox" name="dementia_type" value="阿茲海默">阿茲海默</label>
-        <label><input type="checkbox" name="dementia_type" value="血管型">血管型</label>
-        <label><input type="checkbox" name="dementia_type" value="額顳葉型">額顳葉型</label>
-        <label><input type="checkbox" name="dementia_type" value="路易氏體型">路易氏體型</label>
-        <label><input type="checkbox" name="dementia_type" value="混合型">混合型</label>
-        <label><input type="checkbox" name="dementia_type" value="不詳">不詳</label>
-        <label><input type="checkbox" name="dementia_type" value="其他">其他</label>
-        <input type="text" name="type_other">
-      </td>
-    </tr>
+      <tr>
+        <th>失智症種類</th>
+        <td>
+          <label><input type="checkbox" name="dementia_type" value="阿茲海默">阿茲海默</label>
+          <label><input type="checkbox" name="dementia_type" value="血管型">血管型</label>
+          <label><input type="checkbox" name="dementia_type" value="額顳葉型">額顳葉型</label>
+          <label><input type="checkbox" name="dementia_type" value="路易氏體型">路易氏體型</label>
+          <label><input type="checkbox" name="dementia_type" value="混合型">混合型</label>
+          <label><input type="checkbox" name="dementia_type" value="不詳">不詳</label>
+          <label><input type="checkbox" name="dementia_type" value="其他">其他</label>
+          <input type="text" name="type_other">
+        </td>
+      </tr>
 
-    <tr>
-      <th>患者基本資料</th>
-      <td>
-        年齡：<input type="text" name="birth"><br>
-        其它：<input type="text" name="others"><br>
-      </td>
-    </tr>
+      <tr>
+        <th>患者基本資料</th>
+        <td>
+          年齡：<input type="text" name="birth"><br>
+          其它：<input type="text" name="others"><br>
+        </td>
+      </tr>
 
-    <tr>
-      <th>問題主述*</th>
-      <td>
-        <textarea name="message" required placeholder="請在此輸入您的問題，謝謝！"></textarea>
-      </td>
-    </tr>
+      <tr>
+        <th>問題主述*</th>
+        <td>
+          <textarea name="message" required placeholder="請在此輸入您的問題，謝謝！"></textarea>
+        </td>
+      </tr>
 
-    <tr>
-      <td colspan="2" class="center">
-        <button type="submit" class="submit-button">送出</button>
-      </td>
-    </tr>
-  </table>
-</form>
+      <tr>
+        <td colspan="2" class="center">
+          <button type="submit" class="submit-button">送出</button>
+        </td>
+      </tr>
+    </table>
+  </form>
 
   <!-- EmailJS Script -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
@@ -215,7 +236,7 @@
     document.getElementById("contact-form").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      emailjs.sendForm("service_1", "template_smfq3n6", this) // ✅ 換成你的 Template ID
+      emailjs.sendForm("service_1", "template_smfq3n6", this)
         .then(function() {
           alert("訊息已成功寄出！");
         }, function(error) {
