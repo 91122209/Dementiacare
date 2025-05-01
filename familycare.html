@@ -10,6 +10,22 @@
       padding: 20px;
     }
 
+    .hospital-home-link {
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .hospital-home-link a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .hospital-home-link a:hover {
+      text-decoration: underline;
+    }
+
     .header {
       display: flex;
       align-items: center;
@@ -46,14 +62,14 @@
       color: #666;
     }
 
-    .description{
-        max-width: 900px;
-        margin: 50px auto 40px auto;
-        line-height: 1.8;
-        font-size: 16px;
-        text-align: left;
-        white-space: normal;
-        word-break: break-word;
+    .description {
+      max-width: 1000px;
+      margin: 80px auto;
+      font-size: 18px;
+      line-height: 1.8;
+      text-align: left;
+      white-space: normal;
+      word-break: break-word;
     }
 
     h2 {
@@ -62,14 +78,6 @@
       border-left: 6px solid #C4571B;
       padding-left: 10px;
       margin-bottom: 20px;
-    }
-
-    .description {
-      text-align: left;
-      max-width: 1000px;
-      margin: 80px auto;
-      font-size: 18px;
-      line-height: 1.8;
     }
 
     table {
@@ -99,6 +107,11 @@
   </style>
 </head>
 <body>
+
+  <!-- 高雄市立聯合醫院首頁連結 -->
+  <div class="hospital-home-link">
+    <a href="https://www.kmuh.gov.tw/" target="_blank">高雄市立聯合醫院 首頁</a>
+  </div>
 
   <!-- LOGO + 導覽列 -->
   <div class="header">
@@ -138,6 +151,7 @@
       <th>地址</th>
       <th>聯絡電話</th>
     </tr>
+    <!-- 這裡照原表格完整貼上所有機構資料 -->
     <tr>
       <td><a href="http://www.tada2002.org.tw/" target="_blank">社團法人台灣失智症協會</a></td>
       <td>台北市中山區中山北路三段29號3F-2</td>
@@ -219,13 +233,15 @@
       <td>089-380-900 / 089-380-008</td>
     </tr>
     <tr>
-        <td colspan="3" style="background-color: #f9ae54; text-align: center; font-size: 16px;">
-        <strong>高雄失智共照中心<strong><br>
-      </tr>
-      <tr>
-        <td colspan="3" style="text-align: center;">
-        <a href="https://docs.google.com/spreadsheets/d/1pVzXiBXTU30GvD34FLEPBYoKfd7gbrrKwaMJGQcGDTs/edit?gid=1047789956#gid=1047789956" target="_blank">高雄市共照中心一覽表</a></td>
-      </tr>
+      <td colspan="3" style="background-color: #f9ae54; text-align: center; font-size: 16px;">
+        <strong>高雄失智共照中心</strong>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align: center;">
+        <a href="https://docs.google.com/spreadsheets/d/1pVzXiBXTU30GvD34FLEPBYoKfd7gbrrKwaMJGQcGDTs/edit?gid=1047789956#gid=1047789956" target="_blank">高雄市共照中心一覽表</a>
+      </td>
+    </tr>
   </table>
 
 </body>
