@@ -5,13 +5,12 @@
   <title>關於失智症相關照護及認識</title>
   <style>
     body {
-      background-color: #e5f4e3; /* 淡綠色背景 */
+      background-color: #e5f4e3;
       font-family: "微軟正黑體", sans-serif;
       margin: 0;
       padding: 20px;
     }
 
-    /* Logo + 導覽列容器 */
     .header {
       display: flex;
       align-items: center;
@@ -25,7 +24,7 @@
 
     .nav {
       display: flex;
-      justify-content: flex-end; /* 靠右 */
+      justify-content: flex-end;
       gap: 20px;
       flex-wrap: wrap;
       margin-right: 20px;
@@ -47,10 +46,10 @@
       color: #666;
     }
 
-    .container{
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
     h2 {
@@ -74,58 +73,43 @@
       margin: auto;
       border-radius: 10px;
       width: 100%;
-      max-width: 800px;
+      max-width: 900px;
       height: auto;
     }
 
-
-    table {
-      width: 90%;
-      border-collapse: collapse;
-      table-layout: fixed;
+    /* === 影片區塊 === */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 每列2格 */
+      gap: 20px;
+      margin-top: 30px;
     }
 
-    th, td {
-      font-size: 20px;
+    .video-item {
+      background-color: #fff;
+      padding: 10px;
+      border: 1px solid #aaa;
+      border-radius: 10px;
+      font-size: 16px;
       font-weight: bold;
-      text-align: left;
-      padding: 12px;
-      border: 1px solid #7a7878;
-      vertical-align: top;
     }
 
-    th:first-child{
-        width: 30%;
-        text-align: left;
-    }
-
-    tr.header-row th{
-        background-color: #72aa73;
-        color: rgb(10, 10, 10);
-        border: none;
-    }
-
-
-    iframe {
-      display: block;
-      margin: 0 auto;
+    .video-item iframe {
       width: 100%;
-      max-width: 600px;
-      height: 400px;
+      height: 300px;
       border: none;
+      border-radius: 8px;
     }
-
-
   </style>
 </head>
 <body>
 
   <!-- LOGO與導覽列 -->
-  <div class="header" style="display: flex; align-items: center; justify-content: space-between;">
+  <div class="header">
     <a href="index.html">
-      <img src="one.jpg" alt="高雄市立聯合醫院" class="logo" style="max-width: 500px;">
+      <img src="one.jpg" alt="高雄市立聯合醫院" class="logo">
     </a>
-  
+
     <div class="nav">
       <a href="dementiacare.html">關於失智症<br>相關照護及認識</a>
       <span class="separator">|</span>
@@ -139,86 +123,66 @@
     </div>
   </div>
 
-  <!-- 標題 -->
   <h2>關於失智症相關照護及認識</h2>
 
-<div class="container">
-  <!-- 圖片輪播區塊 -->
-  <div id="slider">
-    <img id="slideImg" src="4.jpg" style="width:100%; max-width:900px; height:auto; border-radius:10px; display: block;">
+  <div class="container">
+    <!-- 圖片輪播區塊 -->
+    <div id="slider">
+      <img id="slideImg" src="4.jpg" alt="失智照護圖片">
+    </div>
+
+    <!-- 影片兩欄排版 -->
+    <div class="video-grid">
+      <div class="video-item">1.高雄榮總 - 認識譫妄症：
+        <iframe src="https://www.youtube.com/embed/GxagI9DPO5o" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">2.國健署 - 失智友善居家環境佈置：
+        <iframe src="https://www.youtube.com/embed/YQ7yyZyvaR8" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">3.口腔清潔與吞嚥運動：
+        <iframe src="https://www.youtube.com/embed/dM1PqSrPEzc" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">4.吞嚥健康操（國語版）：
+        <iframe src="https://www.youtube.com/embed/zsmMYEvqYdE" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">5.健腦飲食吃出好腦力：
+        <iframe src="https://www.youtube.com/embed/k_jsVhs7ksY" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">6.食材挑選有一套：
+        <iframe src="https://www.youtube.com/embed/rPAur7DdkeA" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">7.進食問題與營養對策：
+        <iframe src="https://www.youtube.com/embed/VkTQ-EdMkug" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">8.失智者飲食烹調教學：
+        <iframe src="https://www.youtube.com/embed/MgsheHorZT4" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">9.預防衰弱六分鐘影片：
+        <iframe src="https://www.youtube.com/embed/S4OOKst72aM" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">10.照護者瑜珈伸展操：
+        <iframe src="https://www.youtube.com/embed/mbXQXgoge80" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">11.居家運動(輪椅篇)：
+        <iframe src="https://www.youtube.com/embed/F__iMdD5JCE" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">12.居家運動(助行器篇)：
+        <iframe src="https://www.youtube.com/embed/GxlytwwnezY" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">13.認識肌少症：
+        <iframe src="https://www.youtube.com/embed/tY2FaVynU5c" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">14.肌少症運動影片：
+        <iframe src="https://www.youtube.com/embed/mpffjEGw2l4" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">15.失智者身體活動教學：
+        <iframe src="https://www.youtube.com/embed/PUNdsyYsEbw" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">16.日常照護與活動安排：
+        <iframe src="https://www.youtube.com/embed/Furhg4j3jhM" allowfullscreen></iframe>
+      </div>
+    </div>
   </div>
-  <!-- 影片表格區塊 -->
-  <table>
-    <tr class="header-row">
-      <th>影片標題</th>
-      <th>影片播放</th>
-    </tr>
-    <tr>
-      <td>1.高雄榮總 - 認識譫妄症：</td>
-      <td><iframe src="https://www.youtube.com/embed/GxagI9DPO5o" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>2.國健署 - 失智友善居家環境佈置：</td>
-      <td><iframe src="https://www.youtube.com/embed/YQ7yyZyvaR8" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>3.長輩好像有點吞嚥障礙 - 『口腔清潔、進食照護與吞嚥運動』衛教影片：</td>
-      <td><iframe src="https://www.youtube.com/embed/dM1PqSrPEzc" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>4.長輩好像有點吞嚥障礙 –呷百二『吞嚥健康操』（國語版）：</td>
-      <td><iframe src="https://www.youtube.com/embed/zsmMYEvqYdE" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>5.民以食為天！國健署 -『健腦飲食吃出好腦力』：</td>
-      <td><iframe src="https://www.youtube.com/embed/k_jsVhs7ksY" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>6.民以食為天！國健署 -『食材挑選有一套』：</td>
-      <td><iframe src="https://www.youtube.com/embed/rPAur7DdkeA" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>7.民以食為天！失智症進食問題與對策 -『營養對策』：</td>
-      <td><iframe src="https://www.youtube.com/embed/VkTQ-EdMkug" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>8.民以食為天！國健署 - 『失智者的飲食烹調教學』：</td>
-      <td><iframe src="https://www.youtube.com/embed/MgsheHorZT4" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>9.如何在家做認知促進！高雄榮總 - 預防衰弱六分鐘衛教影片：</td>
-      <td><iframe src="https://www.youtube.com/embed/S4OOKst72aM" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>10.如何在家做認知促進！國健署 -『照護者紓壓肢體伸展與瑜珈』：</td>
-      <td><iframe src="https://www.youtube.com/embed/mbXQXgoge80" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>11.如何在家做認知促進！高雄榮總 – 高齡長者居家運動(輪椅篇)：</td>
-      <td><iframe src="https://www.youtube.com/embed/F__iMdD5JCE" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>12.如何在家做認知促進！高雄榮總 –高齡長者居家運動(助行器非輪椅篇)：</td>
-      <td><iframe src="https://www.youtube.com/embed/GxlytwwnezY" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>13.長輩都不運動！高雄榮總 – 認識肌少症：</td>
-      <td><iframe src="https://www.youtube.com/embed/tY2FaVynU5c" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>14.長輩都不運動！高雄榮總 - 肌少症運動衛教影片：</td>
-      <td><iframe src="https://www.youtube.com/embed/mpffjEGw2l4" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>15.長輩都不運動！國健署-失智者身體活動教學：</td>
-      <td><iframe src="https://www.youtube.com/embed/PUNdsyYsEbw" allowfullscreen></iframe></td>
-    </tr>
-    <tr>
-      <td>16.長輩都不運動！國健署-失智者日常照顧與活動安排：</td>
-      <td><iframe src="https://www.youtube.com/embed/Furhg4j3jhM" allowfullscreen></iframe></td>
-    </tr>
-  </table>
-</div>
 
   <!-- JS 輪播控制 -->
   <script>
@@ -244,7 +208,7 @@
       img.style.height = sizes[current].height;
     }
 
-    showImage(current); // 初始顯示
+    showImage(current);
 
     const autoSlide = setInterval(() => {
       showImage(current + 1);
@@ -260,6 +224,5 @@
       }
     });
   </script>
-
 </body>
 </html>
