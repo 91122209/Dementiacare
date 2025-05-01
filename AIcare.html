@@ -10,6 +10,22 @@
       padding: 20px;
     }
 
+    /* 首頁連結（右上角） */
+    .hospital-home-link {
+      text-align: right;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .hospital-home-link a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .hospital-home-link a:hover {
+      text-decoration: underline;
+    }
+
     /* Logo + 導覽列容器 */
     .header {
       display: flex;
@@ -45,21 +61,6 @@
       margin: 0 10px;
       color: #666;
     }
-
-.hospital-home-link {
-  text-align: right;
-  padding: 8px 20px 0 0;
-  font-size: 14px;
-}
-
-.hospital-home-link a {
-  color: #333;
-  text-decoration: none;
-}
-
-.hospital-home-link a:hover {
-  text-decoration: underline;
-}
 
     h2 {
       color: #C4571B;
@@ -129,15 +130,16 @@
 </head>
 <body>
 
+  <!-- 導覽列右上角首頁連結 -->
+  <div class="hospital-home-link">
+    <a href="https://www.kmuh.gov.tw/">高雄市立聯合醫院 首頁</a>
+  </div>
+
   <!-- LOGO與導覽列 -->
   <div class="header">
     <a href="index.html">
       <img src="one.jpg" alt="高雄市立聯合醫院" class="logo">
     </a>
-
-<div class="hospital-home-link">
-  <a href="https://www.kmuh.gov.tw/">高雄市立聯合醫院 首頁</a>
-</div>
 
     <div class="nav">
       <a href="dementiacare.html">關於失智症<br>相關照護及認識</a>
@@ -157,7 +159,7 @@
   <!-- 頁面標題 -->
   <h2>關於失智症問題，由 A I 來協助您！</h2>
 
-    <div class="description">
+  <div class="description">
     AI 不是萬能，但也不是萬萬不能，若有疑慮請直接洽詢共照中心，將會由專人為您解答。<br>
   </div>
 
@@ -179,45 +181,45 @@
   </div>
 
   <!-- JavaScript 呼叫後端 -->
-<script>
-  async function askGPT() {
-    const question = document.getElementById('question').value.trim();
-    const responseBox = document.getElementById('response');
+  <script>
+    async function askGPT() {
+      const question = document.getElementById('question').value.trim();
+      const responseBox = document.getElementById('response');
 
-    if (!question) {
-      alert("請先輸入問題！");
-      return;
+      if (!question) {
+        alert("請先輸入問題！");
+        return;
+      }
+
+      responseBox.innerText = "AI 正在思考中……";
+
+      try {
+        const response = await fetch("https://dementia-r1e8.onrender.com/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ question })
+        });
+
+        const data = await response.json();
+        if (data && data.reply) {
+          responseBox.innerText = data.reply;
+        } else {
+          responseBox.innerText = "AI 無法提供回覆，請稍後再試。";
+        }
+
+      } catch (err) {
+        console.error("前端錯誤：", err);
+        responseBox.innerText = "發生錯誤，請稍後再試。";
+      }
     }
 
-    responseBox.innerText = "AI 正在思考中……";
-
-    try {
-const response = await fetch("https://dementia-r1e8.onrender.com/api/chat", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ question })
-});
-
-const data = await response.json();
-if (data && data.reply) {
-  responseBox.innerText = data.reply;
-} else {
-  responseBox.innerText = "AI 無法提供回覆，請稍後再試。";
-}
-
-    } catch (err) {
-      console.error("前端錯誤：", err);
-      responseBox.innerText = "發生錯誤，請稍後再試。";
+    function resetFields() {
+      document.getElementById('question').value = '';
+      document.getElementById('response').innerText = 'AI 將解答您的問題。';
     }
-  }
-
-  function resetFields() {
-    document.getElementById('question').value = '';
-    document.getElementById('response').innerText = 'AI 將解答您的問題。';
-  }
-</script>
+  </script>
 
 </body>
 </html>
