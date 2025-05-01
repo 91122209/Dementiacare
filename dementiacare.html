@@ -11,6 +11,23 @@
       padding: 20px;
     }
 
+    /* 首頁右上連結 */
+    .hospital-home-link {
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .hospital-home-link a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .hospital-home-link a:hover {
+      text-decoration: underline;
+    }
+
     .header {
       display: flex;
       align-items: center;
@@ -103,14 +120,19 @@
       border-radius: 8px;
     }
 
-      @media (max-width: 768px) {
-    .video-grid {
-      grid-template-columns: 1fr;
+    @media (max-width: 768px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
     }
-        
   </style>
 </head>
 <body>
+
+  <!-- 高雄市首頁連結（導覽列上方右上角） -->
+  <div class="hospital-home-link">
+    <a href="https://www.kmuh.gov.tw/" target="_blank">高雄市立聯合醫院 首頁</a>
+  </div>
 
   <!-- LOGO與導覽列 -->
   <div class="header">
@@ -127,7 +149,7 @@
       <span class="separator">|</span>
       <a href="downloadcare.html">失智據點&醫事C據點<br>哪裡找</a>
       <span class="separator">|</span>
-      <a href=link.html">相關資源連結</a>
+      <a href="link.html">相關資源連結</a>
       <span class="separator">|</span>
       <a href="email.html">聯絡我們</a>
     </div>
