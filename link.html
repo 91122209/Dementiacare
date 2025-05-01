@@ -43,6 +43,22 @@
       color: #666;
     }
 
+    .top-title-wrapper {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+    .top-title {
+      color: #C4571B;
+      font-size: 28px;
+      font-weight: bold;
+      border-left: 6px solid #C4571B;
+      padding-left: 10px;
+      display: inline-block;
+      margin-top: 15px;
+    }
+
     .container {
       max-width: 800px;
       margin: 40px auto;
@@ -52,11 +68,14 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    h1 {
-      text-align: center;
-      color: #2f5d31;
-      font-size: 28px;
-      margin-bottom: 30px;
+    .section-title {
+      color: #C4571B;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: left;
+      border-left: 6px solid #C4571B;
+      padding-left: 10px;
+      margin: 20px 0 30px 0;
     }
 
     .link-item {
@@ -86,7 +105,13 @@
 </head>
 <body>
 
-  <!-- LOGO + 導覽列 -->
+  <!-- LOGO + 主標題 -->
+  <div class="top-title-wrapper">
+    <img src="one.jpg" alt="高雄市立聯合醫院" style="max-width: 600px; width: 100%;">
+    <div class="top-title">相關網頁連結篇</div>
+  </div>
+
+  <!-- 導覽列 -->
   <div class="header">
     <a href="index.html">
       <img src="one.jpg" alt="高雄市立聯合醫院" class="logo">
@@ -109,7 +134,7 @@
 
   <!-- 內容 -->
   <div class="container">
-    <h1>🔗 相關網頁連結</h1>
+    <h2 class="section-title">相關資源連結</h2>
 
     <div class="link-item">
       <a href="https://www.judicial.gov.tw/tw/cp-1654-2744-8b004-1.html" target="_blank">1. 什麼是監護宣告？</a>
