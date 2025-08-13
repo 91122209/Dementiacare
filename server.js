@@ -39,7 +39,7 @@ app.post("/api/chat", async (req, res) => {
     dailyCount++;
 
     const response = await axios.post(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=" + process.env.GEMINI_API_KEY,
+      "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro-latest:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
         contents: [{
           parts: [{
@@ -77,6 +77,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ 伺服器啟動：http://localhost:${PORT}`);
 });
+
 
 
 
