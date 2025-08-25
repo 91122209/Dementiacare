@@ -74,71 +74,80 @@
     </div>
   </div>
 
-  <script>
-    // 若此頁部署在 Render 同一域名 => 使用相對路徑；其他（如 GitHub Pages）=> 使用 Render 完整域名
-    const API_BASE = (location.hostname.endsWith("onrender.com")) ? "" : "https://dementia-r1e8.onrender.com";
+<script>
+  // 1) 寫死正確網域（不要再自動判斷）
+  const API_BASE = "https://dementia-r1e8.onrender.com";
 
-    const questionEl = document.getElementById('question');
-    const responseBox = document.getElementById('response');
-    const btnAsk = document.getElementById('btnAsk');
-    const btnReset = document.getElementById('btnReset');
+  // 2) 開頁面時在 Console 印出目前將要呼叫的 API URL（方便你確認）
+  console.log("Using API_BASE:", API_BASE);
 
-    btnAsk.addEventListener('click', askGPT);
-    btnReset.addEventListener('click', resetFields);
+  const questionEl = document.getElementById('question');
+  const responseBox = document.getElementById('response');
+  const btnAsk = document.getElementById('btnAsk');
+  const btnReset = document.getElementById('btnReset');
 
-    // Enter 送出；Shift+Enter 換行
-    questionEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); askGPT(); }
-    });
+  btnAsk.addEventListener('click', askGPT);
+  btnReset.addEventListener('click', resetFields);
 
-    async function askGPT() {
-      const question = questionEl.value.trim();
-      if (!question) { alert('請先輸入問題！'); return; }
+  // Enter 送出；Shift+Enter 換行
+  questionEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); askGPT(); }
+  });
 
-      responseBox.textContent = 'AI 正在思考中……';
-      responseBox.classList.add('loading');
+  async function askGPT() {
+    const question = questionEl.value.trim();
+    if (!question) { alert('請先輸入問題！'); return; }
 
-      // 30 秒逾時
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 30000);
+    responseBox.textContent = 'AI 正在思考中……';
+    responseBox.classList.add('loading');
 
-      try {
-        const resp = await fetch(`${API_BASE}/api/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question }),
-          signal: ctrl.signal
-        });
+    // 30 秒逾時
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 30000);
 
-        clearTimeout(timer);
-        responseBox.classList.remove('loading');
+    try {
+      // 3) 加上 cache-buster 避免任何中間層快取 / 舊 Service Worker 影響
+      const url = `${API_BASE}/api/chat?_=${Date.now()}`;
 
-        const text = await resp.text();
-        let data = null;
-        try { data = JSON.parse(text); } catch (_) {}
+      console.log("POST ->", url);
 
-        if (resp.ok && data && data.reply) {
-          responseBox.textContent = data.reply;
-        } else {
-          const detail = (data && (data.error || data.detail)) ? `（詳情：${data.error || data.detail}）` : text;
-          responseBox.textContent = `AI 無法提供回覆，請稍後再試。${detail ? "\n" + detail : ""}`;
-        }
-      } catch (err) {
-        clearTimeout(timer);
-        responseBox.classList.remove('loading');
-        console.error('前端錯誤：', err);
-        responseBox.textContent = (err && err.name === 'AbortError')
-          ? '連線逾時，請稍後再試。'
-          : '發生錯誤，請稍後再試。';
-      }
-    }
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question }),
+        signal: ctrl.signal
+      });
 
-    function resetFields() {
-      questionEl.value = '';
-      responseBox.textContent = 'AI 將解答您的問題。';
+      clearTimeout(timer);
       responseBox.classList.remove('loading');
+
+      const text = await resp.text();
+      let data = null;
+      try { data = JSON.parse(text); } catch (_) {}
+
+      if (resp.ok && data && data.reply) {
+        responseBox.textContent = data.reply;
+      } else {
+        const detail = (data && (data.error || data.detail)) ? `（詳情：${data.error || data.detail}）` : text;
+        responseBox.textContent = `AI 無法提供回覆，請稍後再試。${detail ? "\n" + detail : ""}`;
+      }
+    } catch (err) {
+      clearTimeout(timer);
+      responseBox.classList.remove('loading');
+      console.error('前端錯誤：', err);
+      responseBox.textContent = (err && err.name === 'AbortError')
+        ? '連線逾時，請稍後再試。'
+        : '發生錯誤，請稍後再試。';
     }
-  </script>
+  }
+
+  function resetFields() {
+    questionEl.value = '';
+    responseBox.textContent = 'AI 將解答您的問題。';
+    responseBox.classList.remove('loading');
+  }
+</script>
 </body>
 </html>
+
 
