@@ -5,52 +5,35 @@ require("dotenv").config();
 
 const app = express();
 
-/* ---------------- CORS 白名單（可用環境變數覆蓋） ---------------- */
-const ALLOW_ORIGINS = (process.env.ALLOW_ORIGINS || [
-  "https://9112209.github.io",            // 你的 GitHub Pages
-  "https://dementia-r1e8.onrender.com"    // 你的 Render 網域
-].join(","))
-  .split(",")
-  .map(s => s.trim())
-  .filter(Boolean);
-
-// 自訂 CORS：保證預檢 OPTIONS 回 204 + 正確標頭
+/* ====================== CORS（保證通版） ====================== */
+/* 對所有請求一律附上 CORS 標頭。預檢 OPTIONS 直接 204。 */
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-
-  // 允許同源或無 Origin（curl/健康檢查）
-  if (!origin || ALLOW_ORIGINS.includes("*") || ALLOW_ORIGINS.includes(origin)) {
-    if (origin) {
-      res.setHeader("Access-Control-Allow-Origin", origin);
-      res.setHeader("Vary", "Origin");
-    }
-    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    if (req.method === "OPTIONS") return res.sendStatus(204);
-    return next();
-  }
-
-  // 不在白名單：預檢也回 204，實際請求讓瀏覽器自行擋
+  // 我們不使用 cookies，因此可安全使用萬用 *；若要收緊再改回白名單。
+  res.setHeader("Access-Control-Allow-Origin", origin || "*");
+  res.setHeader("Vary", "Origin");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (req.method === "OPTIONS") return res.sendStatus(204);
-  return next();
+  next();
 });
 
-/* ---------------- 其他中介層 ---------------- */
+/* ====================== 其他中介層 ====================== */
 app.use(express.json({ limit: "1mb" }));
-app.use(express.static(__dirname)); // 同站部署前端檔案
+app.use(express.static(__dirname)); // 可同站提供前端檔案
 
-/* ---------------- 台北時間每日重置 ---------------- */
+/* ====================== 台北時間每日重置 ====================== */
 const tz = "Asia/Taipei";
 function todayInTzYYYYMMDD() {
   return new Date().toLocaleDateString("en-CA", { timeZone: tz }); // YYYY-MM-DD
 }
 
-/* ---------------- 每日次數限制（記憶體） ---------------- */
+/* ====================== 每日次數限制（記憶體） ====================== */
 let dailyCount = 0;
 let lastResetDate = todayInTzYYYYMMDD();
 const DAILY_LIMIT = Number(process.env.DAILY_LIMIT || 55);
 
-/* ---------------- 健檢端點 ---------------- */
+/* ====================== 健檢端點 ====================== */
 app.get("/health", (_req, res) => {
   res.json({
     ok: true,
@@ -58,11 +41,10 @@ app.get("/health", (_req, res) => {
     dailyCount,
     DAILY_LIMIT,
     model: process.env.MODEL || "gemini-1.5-pro-latest",
-    allowOrigins: ALLOW_ORIGINS,
   });
 });
 
-/* ---------------- 主要聊天端點 ---------------- */
+/* ====================== 主要聊天端點 ====================== */
 app.post("/api/chat", async (req, res) => {
   // 每日自動重置（台北時間）
   const today = todayInTzYYYYMMDD();
@@ -132,7 +114,7 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-/* ---------------- 其餘路由交給前端 ---------------- */
+/* ====================== 其餘路由交給前端 ====================== */
 app.get("*", (_req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -140,5 +122,5 @@ app.get("*", (_req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   const keyTail = (process.env.GEMINI_API_KEY || "").slice(-4);
-  console.log(`✅ 伺服器啟動：http://localhost:${PORT} ｜ KEY(...${keyTail}) ｜ 允許來源：${ALLOW_ORIGINS.join(", ")}`);
+  console.log(`✅ 伺服器啟動：http://localhost:${PORT} ｜ KEY(...${keyTail})`);
 });
