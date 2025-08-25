@@ -9,7 +9,6 @@ const app = express();
 /* 對所有請求一律附上 CORS 標頭。預檢 OPTIONS 直接 204。 */
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  // 我們不使用 cookies，因此可安全使用萬用 *；若要收緊再改回白名單。
   res.setHeader("Access-Control-Allow-Origin", origin || "*");
   res.setHeader("Vary", "Origin");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -124,3 +123,4 @@ app.listen(PORT, () => {
   const keyTail = (process.env.GEMINI_API_KEY || "").slice(-4);
   console.log(`✅ 伺服器啟動：http://localhost:${PORT} ｜ KEY(...${keyTail})`);
 });
+
