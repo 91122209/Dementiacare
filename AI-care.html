@@ -9,8 +9,6 @@
     body { background-color: #e5f4e3; font-family: "微軟正黑體", sans-serif; padding: 20px; }
     .description { text-align: center; font-size: 24px; font-weight: bold; margin: 30px 0 5px 0; }
     .hospital-home-link { text-align: right; font-size: 16px; font-weight: bold; margin-bottom: 5px; }
-    .hospital-home-link a { color: #333; text-decoration: none; }
-    .hospital-home-link a:hover { text-decoration: underline; }
     .header { display: flex; align-items: center; justify-content: space-between; }
     .logo { max-width: 350px; height: auto; }
     .nav { display: flex; justify-content: flex-end; gap: 20px; flex-wrap: wrap; margin-right: 20px; font-weight: bold; font-size: 16px; }
@@ -42,7 +40,7 @@
     <div class="nav">
       <a href="dementiacare.html">關於失智症<br/>相關照護及認識</a>
       <span class="separator">|</span>
-      <a href="AIcare.html">關於失智症問題<br/>由AI來協助您</a>
+      <a href="AIcare-fixed.html">關於失智症問題<br/>由AI來協助您</a>
       <span class="separator">|</span>
       <a href="familycare.html">家屬支持團體<br/>哪裡找</a>
       <span class="separator">|</span>
@@ -68,7 +66,7 @@
   </div>
 
   <script>
-    // 固定正確的 API 網域（避免任何自動判斷出錯）
+    // 寫死正確網域，並在 Console 顯示
     const API_BASE = "https://dementia-r1e8.onrender.com";
     console.log("Using API_BASE:", API_BASE);
 
@@ -92,12 +90,10 @@
       responseBox.textContent = 'AI 正在思考中……';
       responseBox.classList.add('loading');
 
-      // 30 秒逾時
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 30000);
 
       try {
-        // cache-buster 防止任何中間快取/舊 SW 影響
         const url = `${API_BASE}/api/chat?_=${Date.now()}`;
         console.log("POST ->", url);
 
