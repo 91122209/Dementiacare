@@ -65,73 +65,67 @@
     </div>
   </div>
 
-  <script>
-    // 寫死正確網域，並在 Console 顯示
-    const API_BASE = "https://dementia-r1e8.onrender.com";
-    console.log("Using API_BASE:", API_BASE);
+<script>
+  // 候選後端（順序任選）
+  const CANDIDATES = [
+    "https://dementia-r1e8.onrender.com", // 數字1
+    "https://dementia-rle8.onrender.com"  // 小寫L
+  ];
 
-    const questionEl = document.getElementById('question');
-    const responseBox = document.getElementById('response');
-    const btnAsk = document.getElementById('btnAsk');
-    const btnReset = document.getElementById('btnReset');
+  const questionEl = document.getElementById('question');
+  const responseBox = document.getElementById('response');
+  const btnAsk = document.getElementById('btnAsk');
+  const btnReset = document.getElementById('btnReset');
 
-    btnAsk.addEventListener('click', askGPT);
-    btnReset.addEventListener('click', resetFields);
+  let API_BASE = null;
 
-    // Enter 送出；Shift+Enter 換行
-    questionEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); askGPT(); }
-    });
+  btnAsk.addEventListener('click', askGPT);
+  btnReset.addEventListener('click', resetFields);
 
-    async function askGPT() {
-      const question = questionEl.value.trim();
-      if (!question) { alert('請先輸入問題！'); return; }
-
-      responseBox.textContent = 'AI 正在思考中……';
-      responseBox.classList.add('loading');
-
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 30000);
-
+  // 進頁就挑一個可用的後端
+  (async function pickBackend() {
+    for (const base of CANDIDATES) {
       try {
-        const url = `${API_BASE}/api/chat?_=${Date.now()}`;
-        console.log("POST ->", url);
-
-        const resp = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question }),
-          signal: ctrl.signal
-        });
-
-        clearTimeout(timer);
-        responseBox.classList.remove('loading');
-
-        const text = await resp.text();
-        let data = null;
-        try { data = JSON.parse(text); } catch (_) {}
-
-        if (resp.ok && data && data.reply) {
-          responseBox.textContent = data.reply;
-        } else {
-          const detail = (data && (data.error || data.detail)) ? `（詳情：${data.error || data.detail}）` : text;
-          responseBox.textContent = `AI 無法提供回覆，請稍後再試。${detail ? "\n" + detail : ""}`;
+        const r = await fetch(`${base}/health`, { method: "GET" });
+        if (r.ok) {
+          API_BASE = base;
+          console.log("Using API_BASE:", API_BASE);
+          return;
         }
-      } catch (err) {
-        clearTimeout(timer);
-        responseBox.classList.remove('loading');
-        console.error('前端錯誤：', err);
-        responseBox.textContent = (err && err.name === 'AbortError')
-          ? '連線逾時，請稍後再試。'
-          : '發生錯誤，請稍後再試。';
-      }
+      } catch (_) {}
     }
+    console.error("沒有可用的後端（r1e8 / rle8 都連不上）");
+  })();
 
-    function resetFields() {
-      questionEl.value = '';
-      responseBox.textContent = 'AI 將解答您的問題。';
-      responseBox.classList.remove('loading');
+  async function askGPT() {
+    const q = (questionEl.value || "").trim();
+    if (!q) { alert("請先輸入問題！"); return; }
+    if (!API_BASE) { alert("後端尚未就緒，請稍後再試。"); return; }
+
+    responseBox.textContent = "AI 正在思考中……";
+
+    try {
+      // 用 GET 避免預檢（OPTIONS）造成 CORS 擋下
+      const url = `${API_BASE}/api/chat?question=${encodeURIComponent(q)}&_=${Date.now()}`;
+      console.log("GET ->", url);
+      const resp = await fetch(url, { method: "GET" });
+      const data = await resp.json();
+
+      if (resp.ok && data && data.reply) {
+        responseBox.textContent = data.reply;
+      } else {
+        responseBox.textContent = `AI 無法提供回覆，請稍後再試。\n（詳情：${data?.error || resp.statusText}）`;
+      }
+    } catch (err) {
+      console.error(err);
+      responseBox.textContent = "發生錯誤，請稍後再試。";
     }
-  </script>
+  }
+
+  function resetFields() {
+    questionEl.value = "";
+    responseBox.textContent = "AI 將解答您的問題。";
+  }
+</script>
 </body>
 </html>
