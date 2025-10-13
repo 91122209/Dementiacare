@@ -40,7 +40,7 @@ app.get("/health", (_req, res) => {
     date_tpe: todayInTzYYYYMMDD(),
     dailyCount,
     DAILY_LIMIT,
-    model: process.env.MODEL || "gemini-2.5-flash",
+    model: process.env.MODEL || "gemini-2.0-flash",
   });
 });
 
@@ -129,8 +129,8 @@ app.all("/api/chat", async (req, res) => {
 
     // 模型：預設用 flash，較不易被權限/配額擋
     const userModel =
-      process.env.MODEL || "gemini-2.5-flash";
-    const fallbackModel = "gemini-2.5-flash";
+      process.env.MODEL || "gemini-2.0-flash";
+    const fallbackModel = "gemini-2.0-flash";
 
     // 組提示
     const prompt = `請用清楚的繁體中文，條列式提供可行建議與注意事項。\n問題：${question}`;
@@ -204,5 +204,6 @@ app.listen(PORT, () => {
     `✅ 伺服器啟動：http://localhost:${PORT} ｜ KEY(...${keyTail})`
   );
 });
+
 
 
